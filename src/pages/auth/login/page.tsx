@@ -3,7 +3,7 @@ import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import { FaGoogle, FaFacebookF, FaTwitter, FaEye, FaEyeSlash } from "react-icons/fa";
 import { motion } from "framer-motion";
-import { SERVER_URL } from "../../../config/index";
+import SERVER_URL from "../../../confidential/index";
 
 export default function Login() {
   const [formData, setFormData] = useState({

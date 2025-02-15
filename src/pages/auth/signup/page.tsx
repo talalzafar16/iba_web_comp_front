@@ -3,8 +3,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { FaGoogle, FaFacebookF, FaTwitter, FaEye, FaEyeSlash } from "react-icons/fa";
 import { motion } from "framer-motion";
 import axios from "axios";
-import { SERVER_URL } from "../../../config";
-import { useLocation } from "react-router-dom";
+import SERVER_URL from "../../../confidential/index";
+
 export default function SignUp() {
   const [formData, setFormData] = useState({
     name: "",
@@ -57,7 +57,8 @@ export default function SignUp() {
     setMessage("");
 
     try {
-      const response = await axios.post(`${SERVER_URL}/auth/user/signup`,
+      
+       await axios.post(`${SERVER_URL}/auth/user/signup`,
        formData);
       setMessage("Sign-up successful! Redirecting...");
 

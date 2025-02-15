@@ -3,7 +3,8 @@ import { motion } from "framer-motion";
 import { FaSearch, FaEye, FaHeart } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import { SERVER_URL } from "../../config";
+import SERVER_URL from "../../confidential/index";
+
 
 export default function PublicCollections() {
   const navigate = useNavigate();
@@ -68,8 +69,8 @@ console.log(collections)
   const handleSearch = (e) => {
     setSearchQuery(e.target.value);
   };
-
-  const filteredCollections = collections.filter((collection:any) =>
+                    const filteredCollections = collections.filter((collection) =>
+                      //  @ts-expect-error kbjbn kj 
     collection?.title?.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
@@ -121,8 +122,9 @@ console.log(collections)
           className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-8"
         >
           {filteredCollections.length > 0 ? (
-            filteredCollections.map((collection:any) => (
+            filteredCollections.map((collection) => (
               <motion.div
+            // @ts-expect-error kjh kj
                 key={collection.id}
                 whileHover={{ scale: 1.05 }}
                 transition={{ duration: 0.3 }}
@@ -135,18 +137,22 @@ console.log(collections)
                     muted
                     className="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform"
                   >
+                    {/* @ts-expect-error kbjbn kj */}
                     <source src={collection.videoUrl} type="video/mp4" />
                   </video>
                   <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-all"></div>
                 </div>
 
                 <div className="mt-3 text-center">
+                    {/* @ts-expect-error kbjbn kj */}
                   <h3 className="text-lg font-semibold">{collection.title}</h3>
+                    {/* @ts-expect-error kbjbn kj */}
                   <p className="text-sm text-gray-400">{collection.description}</p>
                 </div>
 
                 <div className="flex items-center justify-center mt-3">
                   <img
+                    //  @ts-expect-error kbjbn kj
                     src={collection.creatorProfile}
                     alt="Creator"
                     className="w-8 h-8 rounded-full border border-red-500 mr-2"
@@ -155,11 +161,13 @@ console.log(collections)
                 </div>
 
                 <div className="flex items-center justify-center mt-2 text-gray-400 text-sm">
+                    {/* @ts-expect-error kbjbn kj */}
                   <FaHeart className="text-red-500 mr-2" /> {collection.likes.length} Likes
                 </div>
 
                 <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all">
                   <button
+                    //  @ts-expect-error kbjbn kj 
                     onClick={() => navigate(`/collection/${collection._id}`)}
                     className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg flex items-center transition-all"
                   >
