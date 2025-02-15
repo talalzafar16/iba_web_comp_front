@@ -15,6 +15,34 @@ export default function Home() {
     );
   }, []);
 
+const stepss = [
+  {
+    title: "Sign Up",
+    description:
+      "Create an account as a creator or user. Use email/password or Google login.",
+    image: "/signup.png",
+  },
+  {
+    title: "Upload Assets",
+    description:
+      "Upload cinematic content like videos, LUTs, transitions, and templates. Set pricing and visibility.",
+    image: "/upload video.png",
+  },
+  {
+    title: "Sell & Monetize",
+    description:
+      "Users can purchase your assets securely via Stripe/PayPal. Track earnings in your dashboard.",
+    image: "/sellimage.jpg",
+  },
+  {
+    title: "Hire Cinematographers",
+    description:
+      "Browse cinematographers' portfolios. Contact and hire professionals directly.",
+    image: "/hireme.jpg", 
+  },
+];
+
+
   return (
     <div className="bg-black text-white">
       <section className="relative w-full h-screen overflow-hidden flex items-center justify-center text-center">
@@ -31,7 +59,6 @@ export default function Home() {
             transition={{ duration: 1.2 }}
             className="text-5xl font-bold neon-glow"
           >
-
             Discover. Create. Monetize Your Cinematic Vision.
           </motion.h1>
           <p className="text-lg text-gray-300 mt-4">
@@ -62,8 +89,9 @@ export default function Home() {
 
       {/* Trending Collections */}
       <section className="py-20 px-10">
-       
-        <h2 className="text-4xl font-semibold text-center mb-8 neon-glow">🔥 Trending Collections</h2>
+        <h2 className="text-4xl font-semibold text-center mb-8 neon-glow">
+          🔥 Trending Collections
+        </h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {[
             {
@@ -123,7 +151,7 @@ export default function Home() {
           ].map((item, index) => (
             <motion.div
               key={index}
-              whileHover={{ scale: 1.05 }}
+              whileHover={{ scale: 1.01 }}
               transition={{ duration: 0.3 }}
               className="relative overflow-hidden rounded-lg shadow-lg bg-gray-900"
             >
@@ -150,7 +178,11 @@ export default function Home() {
                 </div>
                 <div className="mt-3 flex justify-between items-center">
                   <p className="text-gray-300">❤️ {item.likeCount} Likes</p>
-                  <Button type="primary" ghost size="small">
+                  <Button
+                    className="!bg-[#ff4d4d] !border-[#ff4d4d] !text-white hover:!bg-[#ff4d4d]/90 hover:!border-orange-400"
+                    ghost
+                    size="small"
+                  >
                     View Details
                   </Button>
                 </div>
@@ -162,20 +194,54 @@ export default function Home() {
 
       {/* Featured Cinematographers */}
       <section className="py-20 px-10 bg-gray-900">
-        <h2 className="text-4xl font-semibold text-center mb-8 neon-glow"> 🎥 Featured Cinematographers</h2>
+        <h2 className="text-4xl font-semibold text-center mb-8 neon-glow">
+          {" "}
+          🎥 Featured Cinematographers
+        </h2>
 
         <Carousel autoplay className="max-w-3xl mx-auto">
-          {[1, 2, 3].map((cinematographer) => (
-            <div key={cinematographer} className="p-6">
+          {[
+            {
+              videosrc: "/cinematic-video-1.mp4",
+              title: "Serene Sunset by the River",
+              likeCount: 245,
+              videographer: {
+                name: "Alex Carter",
+                profilePicture: "/man (27).jpg",
+              },
+            },
+            {
+              videosrc: "/cinematic-video-2.mp4",
+              title: "Tranquil Docks at Twilight",
+              likeCount: 312,
+              videographer: {
+                name: "Emma Johnson",
+                profilePicture: "/emma.jpg",
+              },
+            },
+
+            {
+              videosrc: "/cinematic-video-6.mp4",
+              title: "Winding Road through the Mountains",
+              likeCount: 401,
+              videographer: {
+                name: "Olivia Brown",
+                profilePicture: "/olivia.png",
+              },
+            },
+          ].map((cinematographer, index) => (
+            <div key={index} className="p-6">
               <Card className="bg-gray-800 text-white text-center border-none">
                 <img
-                  src={`/cinematographer-${cinematographer}.jpg`}
+                  src={`${cinematographer.videographer.profilePicture}`}
                   alt="Cinematographer"
                   className="w-32 h-32 mx-auto rounded-full"
                 />
-                <h3 className="text-xl mt-4 font-semibold">John Doe</h3>
+                <h3 className="text-xl mt-4 font-semibold">
+                  {cinematographer.videographer.name}
+                </h3>
                 <p className="text-gray-400">Award-winning Cinematographer</p>
-                <Button type="primary" className="mt-3">
+                <Button className="!bg-[#ff4d4d] !border-[#ff4d4d] !text-white hover:!bg-[#ff4d4d]/90 hover:!border-orange-400 mt-3">
                   Hire Me
                 </Button>
               </Card>
@@ -187,24 +253,29 @@ export default function Home() {
       {/* How It Works */}
       <section className="py-20 px-10 text-center">
         <h2 className="text-4xl font-semibold mb-8">🚀 How It Works</h2>
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-          {[
-            "Sign Up",
-            "Upload Assets",
-            "Sell & Monetize",
-            "Hire Cinematographers",
-          ].map((step, index) => (
+        <div className="container mx-auto px-6 grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+          {stepss.map((step, index) => (
             <motion.div
               key={index}
-              initial={{ opacity: 0, y: 30 }}
+              className="bg-white p-6 rounded-xl shadow-md"
+              initial={{ opacity: 0, y: 50 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: index * 0.2 }}
               viewport={{ once: true }}
+              whileHover={{ scale: 1.05 }}
             >
-              <Card className="bg-gray-800 text-white border-none">
-                <h3 className="text-2xl font-semibold">{step}</h3>
-                <p className="text-gray-400 mt-2">Step {index + 1}</p>
-              </Card>
+              <div className="w-full h-48 flex justify-center items-center">
+                <motion.img
+                  src={step.image}
+                  alt={step.title}
+                  className="w-40 h-40 object-contain"
+                  initial={{ scale: 0.8, opacity: 0 }}
+                  animate={{ scale: 1, opacity: 1 }}
+                  transition={{ duration: 0.5, delay: index * 0.04 }}
+                />
+              </div>
+              <h3 className="text-xl font-semibold mt-4">{step.title}</h3>
+              <p className="text-gray-600 mt-2">{step.description}</p>
             </motion.div>
           ))}
         </div>
