@@ -1,37 +1,110 @@
 @import "tailwindcss";
 
-/* Neon Glow Effect */
 .neon-glow {
   text-shadow: 0 0 5px #ff4d4d, 0 0 10px #ff4d4d, 0 0 15px #ff4d4d;
 }
 
-/* Animated Button Hover Effect */
 .button-hover-effect:hover {
   box-shadow: 0px 0px 15px rgba(255, 77, 77, 0.8);
   transform: scale(1.05);
 }
 
 
-/* Custom Scrollbar */
 ::-webkit-scrollbar {
-  width: 8px; /* Thin scrollbar */
+  width: 8px; 
 }
 
-/* Scrollbar Track */
 ::-webkit-scrollbar-track {
-  background: #121212; /* Dark track for cinematic feel */
+  background: #121212; 
   border-radius: 10px;
 }
 
-/* Scrollbar Thumb */
 ::-webkit-scrollbar-thumb {
   background: linear-gradient(180deg, #ff4d4d, #8b0000); /* Red gradient */
   border-radius: 10px;
   transition: all 0.3s ease-in-out;
 }
 
-/* Scrollbar Thumb Hover */
 ::-webkit-scrollbar-thumb:hover {
   background: linear-gradient(180deg, #ff6666, #a50000);
   box-shadow: 0px 0px 10px rgba(255, 77, 77, 0.7);
+}
+
+.auth-input {
+  width: 100%;
+  padding: 12px 16px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: white;
+  outline: none;
+  font-size: 16px;
+  transition: 0.3s ease-in-out;
+}
+
+.auth-input::placeholder {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.auth-input:focus {
+  border-color: #ff4d4d;
+  box-shadow: 0px 0px 12px rgba(255, 77, 77, 0.8);
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.auth-button {
+  width: 100%;
+  padding: 12px;
+  border-radius: 8px;
+  background-color: #ff4d4d;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  text-transform: uppercase;
+  transition: 0.3s;
+}
+
+.auth-button:hover {
+  background-color: #cc0000;
+  box-shadow: 0px 0px 15px rgba(255, 77, 77, 0.8);
+  transform: scale(1.05);
+}
+
+
+.otp-input {
+  width: 50px;
+  height: 50px;
+  text-align: center;
+  font-size: 24px;
+  font-weight: bold;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: white;
+  outline: none;
+  transition: 0.3s ease-in-out;
+}
+
+.otp-input:focus {
+  border-color: #ff4d4d;
+  box-shadow: 0px 0px 12px rgba(255, 77, 77, 0.8);
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.auth-button {
+  width: 100%;
+  padding: 12px;
+  border-radius: 8px;
+  background-color: #ff4d4d;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  text-transform: uppercase;
+  transition: 0.3s;
+}
+
+.auth-button:hover {
+  background-color: #cc0000;
+  box-shadow: 0px 0px 15px rgba(255, 77, 77, 0.8);
 }

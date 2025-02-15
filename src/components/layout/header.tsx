@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import { Button } from "antd";
 import { motion } from "framer-motion";
 import { MenuOutlined, CloseOutlined } from "@ant-design/icons";
@@ -7,7 +7,7 @@ import { MenuOutlined, CloseOutlined } from "@ant-design/icons";
 export default function Navbar() {
   const [scrolling, setScrolling] = useState(false);
   const [mobileMenu, setMobileMenu] = useState(false);
-
+  const navigate=useNavigate()
   useEffect(() => {
     const handleScroll = () => {
       setScrolling(window.scrollY > 50);
@@ -47,10 +47,14 @@ export default function Navbar() {
 
         {/* Call to Action Buttons */}
         <div className="hidden md:flex space-x-4">
-          <Button ghost className="!border-red-500 !text-red-400 hover:!bg-[#ff4d4d] hover:!text-white !transition-all">
+          <Button onClick={()=>
+
+        navigate("/auth/login")
+
+          } ghost className="!border-red-500 !text-red-400 hover:!bg-[#ff4d4d] hover:!text-white !transition-all">
             Login
           </Button>
-          <Button className="!bg-[#ff4d4d] !text-white !border-none hover:!bg-red-600 !transition-all">
+          <Button onClick={()=>navigate("/auth/signup")} className="!bg-[#ff4d4d] !text-white !border-none hover:!bg-red-600 !transition-all">
   Sign Up
 </Button>
 
