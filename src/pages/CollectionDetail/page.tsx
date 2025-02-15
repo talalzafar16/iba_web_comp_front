@@ -12,8 +12,8 @@ export default function CollectionDetails() {
   const { id } = useParams();
   const token = localStorage.getItem("x-token"); 
   const [collection,setCollections]=useState({})
-  // const [loading, setLoading] = useState(false); 
   const [items,setItems] = useState([]);
+  // const [loading, setLoading] = useState(false); 
   
 
   const [previewMedia, setPreviewMedia] = useState(null);

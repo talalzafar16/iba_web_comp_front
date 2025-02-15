@@ -1,53 +1,33 @@
 import { useState, useEffect } from "react";
-import { Link, useParams } from "react-router-dom";
+import {  useParams } from "react-router-dom";
 import { motion } from "framer-motion";
 import axios from "axios";
 import {
   FaDownload,
   FaShoppingCart,
-  FaUser,
   FaHeart,
-  FaEye,
 } from "react-icons/fa";
 
 
-import { SERVER_URL } from "../../config";
+import  SERVER_URL  from "../../confidential/index";
 export default function PublicCollectionDetails() {
   const { id } = useParams();
-  const [collection, setCollection] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const token = localStorage.getItem("x-token");
+  const [collection,setCollections]=useState({})
+  const [items,setItems] = useState([]);
 
- useEffect(() => {
-   const fetchCollection = async () => {
-     try {
-       const response = await axios.get(
-         `${SERVER_URL}/collections/${id}/public`
-       );
-       setCollection(response.data || { items: [] });
-     } catch (error) {
-       console.error("Error fetching collection:", error);
-       setCollection(
-         // @ts-expect-error
-         { items: [] }
-       );
-     } finally {
-       setLoading(false);
-     }
-   };
-
-   fetchCollection();
- }, [id]);
 
   const handleToggleFavoriteCollection = async () => {
     try {
       await axios.post(`${SERVER_URL}/collections/${id}/favorite`);
-      setCollection((prev:any) => ({ ...prev, isFavorite: !prev.isFavorite }));
+                // @ts-expect-error jknkjb jkkj
+      setCollection((prev) => ({ ...prev, isFavorite: !prev.isFavorite }));
     } catch (error) {
       console.error("Error updating favorite status:", error);
     }
   };
-
-  const handleToggleFavoriteItem = async (itemId:any) => {
+  // @ts-expect-error hkbvkjb bkjbj
+  const handleToggleFavoriteItem = async (itemId) => {
     try {
       await axios.post(`${SERVER_URL}/items/${itemId}/favorite`);
       setCollection((prev:any) => ({
@@ -60,21 +40,47 @@ export default function PublicCollectionDetails() {
       console.error("Error updating item favorite status:", error);
     }
   };
-  console.log("collections", collection);
 
-  const handleDownload = (item:any) => {
+  // @ts-expect-error hkbvkjb 
+  const handleDownload = (item) => {
     if (!item.isPaid) {
       window.location.href = `${SERVER_URL}/items/${item.id}/download`;
     }
   };
 
-  const handlePurchase = (item:any) => {
+  useEffect(()=>{
+    console.log(id)
+    const fetch=async()=>{
+      const res = await axios.get(`${SERVER_URL}/items/get_my_items_by_collection_id?collection_id=${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+     setItems(res.data)
+    }
+    fetch()
+  },[token,id])
+useEffect(()=>{
+  console.log(id)
+  const fetch=async()=>{
+    const res = await axios.get(`${SERVER_URL}/collections/${id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+   setCollections(res.data)
+  }
+  fetch()
+},[token,id])
+
+// @ts-expect-error kbgj kjh
+  const handlePurchase = (item) => {
     alert(`Redirecting to purchase ${item.title} for $${item.price}`);
   };
 
-  if (loading) return <p className="text-center text-gray-300">Loading...</p>;
-  if (!collection)
-    return <p className="text-center text-gray-300">Collection not found.</p>;
+  // if (loading) return <p className="text-center text-gray-300">Loading...</p>;
+  // if (!collection)
+  //   return <p className="text-center text-gray-300">Collection not found.</p>;
 
   return (
     <motion.div className="min-h-screen pt-24 bg-black text-white p-8">
@@ -85,7 +91,8 @@ export default function PublicCollectionDetails() {
           muted
           className="absolute top-0 left-0 w-full h-full object-cover opacity-30"
         >
-          <source src="/collection.mp4" type="video/mp4" />
+          {/* @ts-expect-error kjbjb bjk */}
+          <source src={collection.videoUrl||"/collection.mp4"} type="video/mp4" />
         </video>
         <motion.div
           initial={{ opacity: 0, y: -20 }}
@@ -95,14 +102,14 @@ export default function PublicCollectionDetails() {
         >
           <h1 className="text-5xl font-bold text-white neon-glow">
             {
-              // @ts-expect-error
+              //  @ts-expect-error bjkbjk
               collection.title
             }{" "}
             🎬
           </h1>
           <p className="text-gray-200 text-lg mt-2">
             {
-              // @ts-expect-error
+              // @ts-expect-error bjkbjk
               collection.description
             }
           </p>
@@ -111,7 +118,7 @@ export default function PublicCollectionDetails() {
             whileTap={{ scale: 0.95 }}
             onClick={handleToggleFavoriteCollection}
             className={`mt-4 px-6 py-3 w-fit rounded-lg text-lg font-semibold flex items-center transition-all ${
-              // @ts-expect-error
+              // @ts-expect-error bjkbjk
               collection.isFavorite
                 ? "bg-red-600 text-white"
                 : "bg-gray-700 text-gray-300 hover:bg-gray-600"
@@ -120,7 +127,7 @@ export default function PublicCollectionDetails() {
             <FaHeart className="mr-2" />
 
             {
-              // @ts-expect-error
+              // @ts-expect-error bjkbjk
               collection.isFavorite
                 ? "Remove from Favorites"
                 : "Add to Favorites"
@@ -131,34 +138,51 @@ export default function PublicCollectionDetails() {
 
       <motion.div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-8">
         {
-          // @ts-expect-error
-          collection?.map((item: any) => (
+          items?.map((item) => (
             <motion.div
+            // @ts-expect-error jkhkj 
               key={item._id}
               whileHover={{ scale: 1.05 }}
               className="bg-gray-900/80 p-4 rounded-lg shadow-lg"
             >
+              <div className="relative w-full h-40 rounded-lg overflow-hidden">
+                    <video autoPlay loop muted className="absolute inset-0 w-full h-full object-cover">
+                   {/* @ts-expect-error jk nh */}
+                      <source src={item.plan=="premium"?item.watermarkedVideoUrl:item.videoUrl} type="video/mp4" />
+                    </video>
+                </div>
               <h3 className="text-lg font-semibold text-center">
+                {/* @ts-expect-error jkbkjbkj */}
                 {item.title}
               </h3>
               <p className="text-gray-400 text-sm text-center">
-                {item.isPaid ? "Premium Item" : "Free Resource"}
+                {/* @ts-expect-error jkbkjbkj */}
+                {item.plan}
               </p>
               <div className="flex justify-center mt-2">
                 <motion.button
+                // @ts-expect-error jknkjb jkb
                   onClick={() => handleToggleFavoriteItem(item.id)}
                   whileTap={{ scale: 0.9 }}
                   className={`text-sm flex items-center transition-all ${
+            // @ts-expect-error jkhkj 
+  
                     item.isFavorite ? "text-red-500" : "hover:text-red-500"
                   }`}
                 >
                   <FaHeart className="mr-1" />{" "}
+                {/* @ts-expect-error jkbkjbkj */}
+
                   {item.isFavorite ? "Remove from Favorites" : "Like"} (
-                  {item.likes})
+                {/* @ts-expect-error jkbkjbkj */}
+                
+                  {item.likes.length})
                 </motion.button>
+
               </div>
               <div className="flex justify-center mt-3 space-x-4">
-                {item.isPaid ? (
+                {/* @ts-expect-error jkbkjbkj */}
+                {item.plan=="premium" ? (
                   <button
                     onClick={() => handlePurchase(item)}
                     className="bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded-lg flex items-center transition-all"
