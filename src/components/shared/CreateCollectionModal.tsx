@@ -1,28 +1,44 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { FaTimes } from "react-icons/fa";
-
-// @ts-expect-error kj kj
+import { FaTimes, FaPlus, FaTag, FaLock, FaGlobe } from "react-icons/fa";
+// @ts-expect-error jh jh
 export default function CreateCollectionModal({ isOpen, onClose, onCreate }) {
   const [formData, setFormData] = useState({
     name: "",
     description: "",
     coverVideo: null,
+    tags: [],
+    newTag: "",
+    isPrivate: false,
   });
 
-// @ts-expect-error kj kj
+  // Handle Input Changes
   const handleInputChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-// @ts-expect-error kj kj
+  // Handle File Upload
   const handleFileChange = (e) => {
     setFormData({ ...formData, coverVideo: e.target.files[0] });
   };
 
- 
-// @ts-expect-error kj kj
+  // Handle Tags
+  const handleAddTag = () => {
+    if (formData.newTag.trim() !== "") {
+      setFormData({
+        ...formData,
+        tags: [...formData.tags, formData.newTag.trim()],
+        newTag: "",
+      });
+    }
+  };
 
+  const handleRemoveTag = (index) => {
+    const updatedTags = formData.tags.filter((_, i) => i !== index);
+    setFormData({ ...formData, tags: updatedTags });
+  };
+
+  // Handle Form Submission
   const handleSubmit = (e) => {
     e.preventDefault();
     if (formData.name.trim() === "" || !formData.coverVideo) return;
@@ -45,6 +61,7 @@ export default function CreateCollectionModal({ isOpen, onClose, onCreate }) {
         </button>
 
         <h2 className="text-2xl font-bold text-white mb-4 text-center">Create New Collection</h2>
+
         <form onSubmit={handleSubmit} className="space-y-4">
           <input
             type="text"
@@ -70,9 +87,46 @@ export default function CreateCollectionModal({ isOpen, onClose, onCreate }) {
             className="w-full p-2 bg-gray-700 rounded-lg text-white"
           />
 
-   
+          {/* Tags Input */}
+          <div className="bg-gray-800 p-3 rounded-lg">
+            <h3 className="text-white mb-2 flex items-center">
+              <FaTag className="mr-2" /> Tags
+            </h3>
+            <div className="flex">
+              <input
+                type="text"
+                placeholder="Add a tag..."
+                value={formData.newTag}
+                onChange={(e) => setFormData({ ...formData, newTag: e.target.value })}
+                className="flex-1 p-2 bg-gray-700 text-white rounded-lg"
+              />
+              <button type="button" onClick={handleAddTag} className="ml-2 bg-red-500 p-2 rounded-lg text-white">
+                <FaPlus />
+              </button>
+            </div>
+            <div className="flex flex-wrap mt-2">
+              {formData.tags.map((tag, index) => (
+                <span key={index} className="bg-gray-600 text-white px-3 py-1 rounded-full text-sm flex items-center m-1">
+                  {tag} <FaTimes onClick={() => handleRemoveTag(index)} className="ml-2 cursor-pointer text-red-400" />
+                </span>
+              ))}
+            </div>
+          </div>
 
-         
+          {/* Privacy Toggle */}
+          <div className="flex items-center justify-between bg-gray-800 p-3 rounded-lg">
+            <h3 className="text-white flex items-center">
+              {formData.isPrivate ? <FaLock className="mr-2" /> : <FaGlobe className="mr-2" />}
+              {formData.isPrivate ? "Private Collection" : "Public Collection"}
+            </h3>
+            <button
+              type="button"
+              onClick={() => setFormData({ ...formData, isPrivate: !formData.isPrivate })}
+              className={`px-4 py-2 rounded-lg ${formData.isPrivate ? "bg-red-500" : "bg-green-500"} text-white`}
+            >
+              {formData.isPrivate ? "Make Public" : "Make Private"}
+            </button>
+          </div>
 
           {/* Submit Button */}
           <button type="submit" className="w-full bg-red-500 hover:bg-red-600 p-3 rounded-lg text-white transition-all">

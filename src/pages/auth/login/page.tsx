@@ -43,6 +43,7 @@ export default function Login() {
     try {
     //   const response = await axios.post("https://your-api.com/login", formData);
       setMessage("Login successful! Redirecting...");
+      localStorage.setItem("x-token","eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3YjA3MzQ5NmViMWEzOGQwYzE0YWMxMSIsImVtYWlsIjoidXNtYW4uMTI3LjAuMC4xQGdtYWlsLmNvbSIsImlzX2VtYWlsX3ZlcmlmaWVkIjp0cnVlLCJpYXQiOjE3Mzk2NzQwMTN9.aJ32QvBMwQJyrNddFPD0md7RRgjIFxyk8NQTXxQ7Zas");
       setTimeout(() => {
         navigate("/dashboard");
       }, 1000);
