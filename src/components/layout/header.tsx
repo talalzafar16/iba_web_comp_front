@@ -21,7 +21,7 @@ export default function Navbar() {
       initial={{ opacity: 0, y: -20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 1 }}
-      className={`fixed top-0 left-0 w-full z-50 transition-all ${
+      className={`fixed z-[9999999] top-0 left-0 w-full  transition-all ${
         scrolling
           ? "bg-black/80 backdrop-blur-md shadow-lg"
           : "bg-gradient-to-r from-black via-gray-900 to-black"
@@ -82,8 +82,12 @@ export default function Navbar() {
             <StyledNavLink to="/about" text="About Us" onClick={() => setMobileMenu(false)} />
             <StyledNavLink to="/collections" text="Collections" onClick={() => setMobileMenu(false)} />
             <StyledNavLink to="/cinematographers" text="Cinematographers" onClick={() => setMobileMenu(false)} />
-            <Button ghost className="!border-red-500 !text-red-400">Login</Button>
-            <Button type="primary" className="!bg-red-500 !border-none">Sign Up</Button>
+            <Button onClick={()=>
+
+navigate("/auth/login")
+
+  }  ghost className="!border-red-500 !text-red-400">Login</Button>
+            <Button onClick={()=>navigate("/auth/signup")} type="primary" className="!bg-red-500 !border-none">Sign Up</Button>
           </div>
         </motion.div>
       )}

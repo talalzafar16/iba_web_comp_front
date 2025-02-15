@@ -1,6 +1,6 @@
 import { useState } from "react";
 // import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FaGoogle, FaFacebookF, FaTwitter, FaEye, FaEyeSlash } from "react-icons/fa";
 import { motion } from "framer-motion";
 
@@ -9,7 +9,7 @@ export default function Login() {
     email: "",
     password: "",
   });
-
+  const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
@@ -43,6 +43,9 @@ export default function Login() {
     try {
     //   const response = await axios.post("https://your-api.com/login", formData);
       setMessage("Login successful! Redirecting...");
+      setTimeout(() => {
+        navigate("/dashboard");
+      }, 1000);
     //   console.log(response.data);
     } catch (error) {
       setMessage("Invalid email or password.");
@@ -107,7 +110,7 @@ export default function Login() {
             {errors.password && <p className="text-red-400 text-sm mt-1">{errors.password}</p>}
           </div>
 
-          <button type="submit" className="auth-button mt-6" disabled={loading}>
+          <button type="submit" className="auth-button mt-6 cursor-pointer" disabled={loading}>
             {loading ? "Logging in..." : "Login"}
           </button>
           {message && <p className="text-center text-gray-300 mt-2">{message}</p>}
@@ -123,7 +126,7 @@ export default function Login() {
 
         <p className="text-gray-400 text-center mt-4">
           Don't have an account?{" "}
-          <Link to="/signup" className="text-red-400 hover:underline">
+          <Link to="/auth/signup" className="text-red-400 cursor-pointer hover:underline">
             Sign Up
           </Link>
         </p>
