@@ -48,7 +48,7 @@ export default function OtpVerification() {
     setMessage("");
 
     try {
-      const response = await axios.post(`${SERVER_URL}/auth/verify_email_by_otp`, {
+      await axios.post(`${SERVER_URL}/auth/verify_email_by_otp`, {
         otp: enteredOtp,
       });
 
@@ -78,7 +78,7 @@ export default function OtpVerification() {
     setMessage("A new OTP has been sent to your email.");
   
      try {
-       const response = await axios.post(
+        await axios.post(
          `${SERVER_URL}/auth/send_otp_for_email_verification`,
          {email}
         

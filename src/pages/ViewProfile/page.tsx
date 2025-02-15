@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Link, useParams } from "react-router-dom";
 import { FaFilm, FaHeart, FaUser, FaGlobe, FaCalendar } from "react-icons/fa";
-import { FaArrowDownUpLock } from "react-icons/fa6";
 
 export default function PublicProfile() {
     const { id } = useParams();
@@ -132,7 +131,7 @@ export default function PublicProfile() {
                 <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-6">
                     {collections.map((collection) => (
                         <motion.div
-                            /* @ts-expect-error */
+                            //  @ts-expect-error  nbkjbkj
                             key={collection._id}
                             whileHover={{ scale: 1.05 }}
                             transition={{ duration: 0.3 }}
@@ -150,7 +149,8 @@ export default function PublicProfile() {
                                 </video>
                                 <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-all flex items-center justify-center">
                                     <Link
-                                        /* @ts-expect-error */
+                            //  @ts-expect-error  nbkjbkj
+
                                         to={`/collection/${collection._id}`}
                                         className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg flex items-center transition-all"
                                     >
