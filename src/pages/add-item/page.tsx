@@ -1,17 +1,20 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { FaCloudUploadAlt } from "react-icons/fa";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 import SideBar from "../../components/layout/SideBarLayout";
 
 export default function AddItem() {
-  const navigate = useNavigate();
+//   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
     title: "",
     description: "",
     media: null,
     collection: "",
+    isPublic: false,
+    isPaid: "free", // 'free' or 'paid'
+    price: "",
   });
 
   const [preview, setPreview] = useState(null);
@@ -41,13 +44,21 @@ export default function AddItem() {
       alert("Please fill in all required fields.");
       return;
     }
-
+    console.log(formData)
     setTimeout(() => {
       alert("Item added successfully!");
-      navigate("/dashboard/my-collections");
+    //   navigate("/dashboard/my-collections");
     }, 1000);
   };
 
+  const handleTogglePrivacy = () => {
+    setFormData({ ...formData, isPublic: !formData.isPublic });
+  };
+
+// @ts-expect-error kj kj
+  const handleIsPaidChange = (e) => {
+    setFormData({ ...formData, isPaid: e.target.value });
+  };
   return (
     <motion.div className="flex min-h-screen overflow-x-hidden pt-20 bg-black text-white">
       <motion.div initial={{ x: -200, opacity: 0 }} animate={{ x: 0, opacity: 1 }} transition={{ duration: 1 }}>
@@ -114,6 +125,44 @@ export default function AddItem() {
                 ))}
               </select>
             </motion.div>
+            <div className="flex items-center justify-between bg-gray-800 p-3 rounded-lg">
+            <span className="text-white">Collection Privacy:</span>
+            <button
+              type="button"
+              onClick={handleTogglePrivacy}
+              className={`px-4 py-2 rounded-lg transition ${
+                formData.isPublic ? "bg-green-500 hover:bg-green-600" : "bg-gray-500 hover:bg-gray-600"
+              } text-white`}
+            >
+              {formData.isPublic ? "Public" : "Private"}
+            </button>
+          </div>
+
+          {formData.isPublic && (
+            <div className="bg-gray-800 p-3 rounded-lg">
+              <label className="text-white">Collection Access:</label>
+              <select
+                name="isPaid"
+                value={formData.isPaid}
+                onChange={handleIsPaidChange}
+                className="w-full mt-2 p-2 bg-gray-700 text-white rounded-lg"
+              >
+                <option value="free">Free</option>
+                <option value="paid">Paid</option>
+              </select>
+            </div>
+          )}
+
+          {formData.isPublic && formData.isPaid === "paid" && (
+            <input
+              type="number"
+              name="price"
+              placeholder="Enter Price ($)"
+              value={formData.price}
+              onChange={handleChange}
+              className="w-full p-3 bg-gray-800 rounded-lg text-white"
+            />
+          )}
 
             {/* Upload Media */}
             <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.3, delay: 0.3 }} className="text-center">

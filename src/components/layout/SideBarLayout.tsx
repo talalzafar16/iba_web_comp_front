@@ -7,7 +7,10 @@ import {
   FaSignOutAlt,
   FaBars,
   FaTimes,
+  FaHeart,
 } from "react-icons/fa";
+import { FaHandHoldingHeart } from "react-icons/fa";
+
 import SidebarLink from "../shared/SideBarLink";
 
 export default function SideBar() {
@@ -30,7 +33,8 @@ export default function SideBar() {
         <nav className="mt-6 space-y-3">
           <SidebarLink icon={FaFilm} text="Overview" route={"/dashboard"} />
           <SidebarLink icon={FaFilm} text="My Collections" route={"/dashboard/my-collection"} />
-          {/* <SidebarLink icon={FaDownload} text="Downloads" route={"/dashboard/my-collection"} /> */}
+          <SidebarLink icon={FaHeart} text="Favourite Collections" route={"/dashboard/favourite-collections"} />
+          <SidebarLink icon={FaHandHoldingHeart} text="Favourite Posts" route={"/dashboard/favourite-posts"} />
           <SidebarLink icon={FaCloudUploadAlt} text="Upload Post" route={"/dashboard/add-item"} />
           <SidebarLink icon={FaUserEdit} text="Edit Profile" route={"/dashboard/edit-profile"} />
           <SidebarLink icon={FaCogs} text="Settings" route={"/dashboard/settings"} />
