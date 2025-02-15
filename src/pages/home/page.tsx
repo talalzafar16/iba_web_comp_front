@@ -17,21 +17,14 @@ export default function Home() {
 
   return (
     <div className="bg-black text-white">
-      {/* Hero Section */}
-      <section className="relative w-full h-screen overflow-hidden">
-        <video
-          autoPlay
-          loop
-          muted
+      <section className="relative w-full h-screen overflow-hidden flex items-center justify-center text-center">
+        <img
+          src="/heroimage.jpg"
+          alt="Hero Background"
           className="absolute top-0 left-0 w-full h-full object-cover opacity-50"
-        >
-          <source src="/cinematic-bg.mp4" type="video/mp4" />
-        </video>
+        />
 
-        <div
-          ref={heroRef}
-          className="relative flex flex-col items-center justify-center h-full text-center"
-        >
+        <div ref={heroRef} className="relative z-10 flex flex-col items-center">
           <motion.h1
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -43,12 +36,23 @@ export default function Home() {
           <p className="text-lg text-gray-300 mt-4">
             A home for filmmakers, cinematographers, and content creators.
           </p>
-
           <div className="mt-6 flex space-x-4">
-            <Button type="primary" shape="round" size="large" icon={<FireOutlined />}>
+            <Button
+              shape="round"
+              size="large"
+              icon={<FireOutlined />}
+              className="!bg-orange-600 !border-orange-600 !text-white hover:!bg-orange-500 hover:!border-orange-400"
+            >
               Explore Collections
             </Button>
-            <Button shape="round" size="large" ghost icon={<PlayCircleOutlined />}>
+
+            <Button
+              shape="round"
+              size="large"
+              ghost
+              icon={<PlayCircleOutlined />}
+              className="!border-white text-white hover:bg-white hover:!text-orange-600  hover:!border-orange-600"
+            >
               Join as a Creator
             </Button>
           </div>
@@ -57,22 +61,100 @@ export default function Home() {
 
       {/* Trending Collections */}
       <section className="py-20 px-10">
-        <h2 className="text-4xl font-semibold text-center mb-8">🔥 Trending Collections</h2>
+        <h2 className="text-4xl font-semibold text-center mb-8">
+          🔥 Trending Collections
+        </h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {[1, 2, 3, 4, 5, 6].map((item) => (
+          {[
+            {
+              videosrc: "/cinematic-video-1.mp4",
+              title: "Serene Sunset by the River",
+              likeCount: 245,
+              videographer: {
+                name: "Alex Carter",
+                profilePicture: "/man (27).jpg",
+              },
+            },
+            {
+              videosrc: "/cinematic-video-2.mp4",
+              title: "Tranquil Docks at Twilight",
+              likeCount: 312,
+              videographer: {
+                name: "Emma Johnson",
+                profilePicture: "/emma.jpg",
+              },
+            },
+            {
+              videosrc: "/cinematic-video-3.mp4",
+              title: "Golden Hour with Birds",
+              likeCount: 278,
+              videographer: {
+                name: "Ryan Smith",
+                profilePicture: "/man (32).jpg",
+              },
+            },
+            {
+              videosrc: "/cinematic-video-4.mp4",
+              title: "Misty Train Journey through the Hills",
+              likeCount: 189,
+              videographer: {
+                name: "Sophia Martinez",
+                profilePicture: "/woman (9).jpg",
+              },
+            },
+            {
+              videosrc: "/cinematic-video-5.mp4",
+              title: "Blossoming Cliffs at Sunrise",
+              likeCount: 354,
+              videographer: {
+                name: "Liam Wilson",
+                profilePicture: "/man (42).jpg",
+              },
+            },
+            {
+              videosrc: "/cinematic-video-6.mp4",
+              title: "Winding Road through the Mountains",
+              likeCount: 401,
+              videographer: {
+                name: "Olivia Brown",
+                profilePicture: "/olivia.png",
+              },
+            },
+          ].map((item, index) => (
             <motion.div
-              key={item}
+              key={index}
               whileHover={{ scale: 1.05 }}
               transition={{ duration: 0.3 }}
+              className="relative overflow-hidden rounded-lg shadow-lg bg-gray-900"
             >
-              <Card
-                cover={<img src={`/sample-${item}.jpg`} alt="Collection" className="rounded-lg" />}
-                className="bg-gray-800 text-white border-none"
-              >
-                <h3 className="text-xl font-semibold">Cinematic Collection {item}</h3>
-                <p className="text-gray-400">By Top Creators</p>
-                <Button type="link">View Details</Button>
-              </Card>
+              <video
+                src={item.videosrc}
+                className="w-full h-90 object-cover rounded-lg"
+                autoPlay
+                loop
+                muted
+              ></video>
+              <div className="absolute bottom-0 left-0 right-0 p-4 bg-black bg-opacity-60 text-white rounded-b-lg">
+                <div className="flex items-center gap-3">
+                  <img
+                    src={item.videographer.profilePicture}
+                    alt={item.videographer.name}
+                    className="w-10 h-10 rounded-full border-2 border-white"
+                  />
+                  <div>
+                    <h3 className="text-lg font-semibold">{item.title}</h3>
+                    <p className="text-sm text-gray-300">
+                      By {item.videographer.name}
+                    </p>
+                  </div>
+                </div>
+                <div className="mt-3 flex justify-between items-center">
+                  <p className="text-gray-300">❤️ {item.likeCount} Likes</p>
+                  <Button type="primary" ghost size="small">
+                    View Details
+                  </Button>
+                </div>
+              </div>
             </motion.div>
           ))}
         </div>
@@ -80,7 +162,9 @@ export default function Home() {
 
       {/* Featured Cinematographers */}
       <section className="py-20 px-10 bg-gray-900">
-        <h2 className="text-4xl font-semibold text-center mb-8">🎥 Featured Cinematographers</h2>
+        <h2 className="text-4xl font-semibold text-center mb-8">
+          🎥 Featured Cinematographers
+        </h2>
         <Carousel autoplay className="max-w-3xl mx-auto">
           {[1, 2, 3].map((cinematographer) => (
             <div key={cinematographer} className="p-6">
@@ -105,28 +189,33 @@ export default function Home() {
       <section className="py-20 px-10 text-center">
         <h2 className="text-4xl font-semibold mb-8">🚀 How It Works</h2>
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-          {["Sign Up", "Upload Assets", "Sell & Monetize", "Hire Cinematographers"].map(
-            (step, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.2 }}
-                viewport={{ once: true }}
-              >
-                <Card className="bg-gray-800 text-white border-none">
-                  <h3 className="text-2xl font-semibold">{step}</h3>
-                  <p className="text-gray-400 mt-2">Step {index + 1}</p>
-                </Card>
-              </motion.div>
-            )
-          )}
+          {[
+            "Sign Up",
+            "Upload Assets",
+            "Sell & Monetize",
+            "Hire Cinematographers",
+          ].map((step, index) => (
+            <motion.div
+              key={index}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: index * 0.2 }}
+              viewport={{ once: true }}
+            >
+              <Card className="bg-gray-800 text-white border-none">
+                <h3 className="text-2xl font-semibold">{step}</h3>
+                <p className="text-gray-400 mt-2">Step {index + 1}</p>
+              </Card>
+            </motion.div>
+          ))}
         </div>
       </section>
 
       {/* Call to Action */}
       <section className="py-20 px-10 bg-black text-center">
-        <h2 className="text-4xl font-semibold">Start Showcasing Your Work Today!</h2>
+        <h2 className="text-4xl font-semibold">
+          Start Showcasing Your Work Today!
+        </h2>
         <div className="mt-6">
           <Button type="primary" size="large" className="mr-4">
             Sign Up as a Creator
