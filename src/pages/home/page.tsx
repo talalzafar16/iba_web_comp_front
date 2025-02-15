@@ -29,8 +29,9 @@ export default function Home() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1.2 }}
-            className="text-5xl font-bold"
+            className="text-5xl font-bold neon-glow"
           >
+
             Discover. Create. Monetize Your Cinematic Vision.
           </motion.h1>
           <p className="text-lg text-gray-300 mt-4">
@@ -41,7 +42,7 @@ export default function Home() {
               shape="round"
               size="large"
               icon={<FireOutlined />}
-              className="!bg-orange-600 !border-orange-600 !text-white hover:!bg-orange-500 hover:!border-orange-400"
+              className="!bg-[#ff4d4d] !border-[#ff4d4d] !text-white hover:!bg-[#ff4d4d]/90 hover:!border-orange-400"
             >
               Explore Collections
             </Button>
@@ -51,7 +52,7 @@ export default function Home() {
               size="large"
               ghost
               icon={<PlayCircleOutlined />}
-              className="!border-white text-white hover:bg-white hover:!text-orange-600  hover:!border-orange-600"
+              className="!border-white text-white hover:bg-white hover:!text-[#ff4d4d]  hover:!border-[#ff4d4d]"
             >
               Join as a Creator
             </Button>
@@ -61,9 +62,8 @@ export default function Home() {
 
       {/* Trending Collections */}
       <section className="py-20 px-10">
-        <h2 className="text-4xl font-semibold text-center mb-8">
-          🔥 Trending Collections
-        </h2>
+       
+        <h2 className="text-4xl font-semibold text-center mb-8 neon-glow">🔥 Trending Collections</h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {[
             {
@@ -162,9 +162,8 @@ export default function Home() {
 
       {/* Featured Cinematographers */}
       <section className="py-20 px-10 bg-gray-900">
-        <h2 className="text-4xl font-semibold text-center mb-8">
-          🎥 Featured Cinematographers
-        </h2>
+        <h2 className="text-4xl font-semibold text-center mb-8 neon-glow"> 🎥 Featured Cinematographers</h2>
+
         <Carousel autoplay className="max-w-3xl mx-auto">
           {[1, 2, 3].map((cinematographer) => (
             <div key={cinematographer} className="p-6">
