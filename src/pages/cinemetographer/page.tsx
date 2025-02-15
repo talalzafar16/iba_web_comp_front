@@ -57,7 +57,7 @@ export default function Cinematographers() {
                     {cinematographers.length > 0 ? (
                         cinematographers.map((cinematographer) => (
                             <motion.div
-                                /* @ts-expect-error */
+                            // @ts-expect-error jkh knm
                                 key={cinematographer._id}
                                 whileHover={{ scale: 1.05 }}
                                 transition={{ duration: 0.3 }}
