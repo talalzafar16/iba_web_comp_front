@@ -20,8 +20,8 @@ export default function PublicCollectionDetails() {
   const handleToggleFavoriteCollection = async () => {
     try {
       await axios.post(`${SERVER_URL}/collections/${id}/favorite`);
-                // @ts-expect-error jknkjb jkkj
-      setCollection((prev) => ({ ...prev, isFavorite: !prev.isFavorite }));
+      // @ts-expect-error kjbgj jkh
+      setCollections((prev) => ({ ...prev, isFavorite: !prev.isFavorite }));
     } catch (error) {
       console.error("Error updating favorite status:", error);
     }
@@ -30,9 +30,12 @@ export default function PublicCollectionDetails() {
   const handleToggleFavoriteItem = async (itemId) => {
     try {
       await axios.post(`${SERVER_URL}/items/${itemId}/favorite`);
-      setCollection((prev:any) => ({
+      
+      setCollections((prev) => ({
         ...prev,
-        items: prev.items.map((item:any) =>
+      
+      // @ts-expect-error kjbgj jkh
+      items: prev.items.map((item) =>
           item.id === itemId ? { ...item, isFavorite: !item.isFavorite } : item
         ),
       }));
