@@ -17,6 +17,7 @@ import PublicProfile from "../pages/ViewProfile/page";
 import FavoritesCollection from "../pages/favCollection/page";
 import FavoritePosts from "../pages/favPosts/page";
 import Cinematographers from "../pages/cinemetographer/page";
+import SuccessPage from "../pages/auth/successs-payment/page";
 
 
 export default function AppRouter() {
@@ -27,6 +28,7 @@ export default function AppRouter() {
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
         <Route path="/collections" element={<PublicCollections />} />
+        <Route path="/payment-success" element={<SuccessPage />} />
         <Route path="/cinematographers" element={<Cinematographers />} />
         <Route path="/collection/:id" element={<PublicCollectionDetails />} />
         <Route path="/user-profile/:id" element={<PublicProfile />} />

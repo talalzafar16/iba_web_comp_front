@@ -10,11 +10,14 @@ import {
 
 
 import  SERVER_URL  from "../../confidential/index";
+import StripePayment from "../payment-loading/page";
 export default function PublicCollectionDetails() {
   const { id } = useParams();
   const token = localStorage.getItem("token");
   const [collection,setCollections]=useState({})
   const [items,setItems] = useState([]);
+  const [isStripeOpen, setIsStripeOpen] = useState(false);
+  const [selectedStripe, setSelectedStripe] = useState(1);
 
 
   const handleToggleFavoriteCollection = async () => {
@@ -70,7 +73,12 @@ useEffect(()=>{
 
 // @ts-expect-error kbgj kjh
   const handlePurchase = (item) => {
-    alert(`Redirecting to purchase ${item.title} for $${item.price}`);
+    if(token){
+      setIsStripeOpen(true);
+      setSelectedStripe(item._id);
+    }else{
+      alert(`Please Login First`);
+    }
   };
 
   // if (loading) return <p className="text-center text-gray-300">Loading...</p>;
@@ -203,6 +211,7 @@ useEffect(()=>{
           ))
         }
       </motion.div>
+      {isStripeOpen && <StripePayment id={selectedStripe} onClose={() => setIsStripeOpen(false)} />}
     </motion.div>
   );
 }
