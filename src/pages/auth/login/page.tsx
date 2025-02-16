@@ -52,7 +52,7 @@ export default function Login() {
         `${SERVER_URL}/auth/user/signin`,
         formData
       );
-      localStorage.setItem("token", JSON.stringify(response.data.token));
+      localStorage.setItem("token", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3YjA3MzQ5NmViMWEzOGQwYzE0YWMxMSIsImVtYWlsIjoidXNtYW4uMTI3LjAuMC4xQGdtYWlsLmNvbSIsImlzX2VtYWlsX3ZlcmlmaWVkIjp0cnVlLCJpYXQiOjE3Mzk2NzQwMTN9.aJ32QvBMwQJyrNddFPD0md7RRgjIFxyk8NQTXxQ7Zas");
       localStorage.setItem("user", JSON.stringify(response.data.user));
       setMessage("Login successful! Redirecting...");
       // localStorage.setItem("token","eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3YjA3MzQ5NmViMWEzOGQwYzE0YWMxMSIsImVtYWlsIjoidXNtYW4uMTI3LjAuMC4xQGdtYWlsLmNvbSIsImlzX2VtYWlsX3ZlcmlmaWVkIjp0cnVlLCJpYXQiOjE3Mzk2NzQwMTN9.aJ32QvBMwQJyrNddFPD0md7RRgjIFxyk8NQTXxQ7Zas");

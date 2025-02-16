@@ -30,6 +30,7 @@ export default function MyCollections() {
   const handleCreateCollection = async (newCollection) => {
     setLoading(true); 
     try {
+      console.log(token,"token")
       const data = new FormData();
       data.append("title", newCollection.name);
       data.append("description", newCollection.description);
