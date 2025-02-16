@@ -8,9 +8,6 @@ export default function CreateCollectionModal({ isOpen, onClose, onCreate }) {
     name: "",
     description: "",
     coverVideo: null,
-    isPublic: false,
-    isPaid: "free", // 'free' or 'paid'
-    price: "",
   });
 
 // @ts-expect-error kj kj
@@ -23,20 +20,12 @@ export default function CreateCollectionModal({ isOpen, onClose, onCreate }) {
     setFormData({ ...formData, coverVideo: e.target.files[0] });
   };
 
-  const handleTogglePrivacy = () => {
-    setFormData({ ...formData, isPublic: !formData.isPublic });
-  };
-
-// @ts-expect-error kj kj
-  const handleIsPaidChange = (e) => {
-    setFormData({ ...formData, isPaid: e.target.value });
-  };
+ 
 // @ts-expect-error kj kj
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (formData.name.trim() === "" || !formData.coverVideo) return;
-    if (formData.isPaid === "paid" && !formData.price) return;
     onCreate(formData);
     onClose();
   };
@@ -81,44 +70,9 @@ export default function CreateCollectionModal({ isOpen, onClose, onCreate }) {
             className="w-full p-2 bg-gray-700 rounded-lg text-white"
           />
 
-          <div className="flex items-center justify-between bg-gray-800 p-3 rounded-lg">
-            <span className="text-white">Collection Privacy:</span>
-            <button
-              type="button"
-              onClick={handleTogglePrivacy}
-              className={`px-4 py-2 rounded-lg transition ${
-                formData.isPublic ? "bg-green-500 hover:bg-green-600" : "bg-gray-500 hover:bg-gray-600"
-              } text-white`}
-            >
-              {formData.isPublic ? "Public" : "Private"}
-            </button>
-          </div>
+   
 
-          {formData.isPublic && (
-            <div className="bg-gray-800 p-3 rounded-lg">
-              <label className="text-white">Collection Access:</label>
-              <select
-                name="isPaid"
-                value={formData.isPaid}
-                onChange={handleIsPaidChange}
-                className="w-full mt-2 p-2 bg-gray-700 text-white rounded-lg"
-              >
-                <option value="free">Free</option>
-                <option value="paid">Paid</option>
-              </select>
-            </div>
-          )}
-
-          {formData.isPublic && formData.isPaid === "paid" && (
-            <input
-              type="number"
-              name="price"
-              placeholder="Enter Price ($)"
-              value={formData.price}
-              onChange={handleInputChange}
-              className="w-full p-3 bg-gray-800 rounded-lg text-white"
-            />
-          )}
+         
 
           {/* Submit Button */}
           <button type="submit" className="w-full bg-red-500 hover:bg-red-600 p-3 rounded-lg text-white transition-all">
