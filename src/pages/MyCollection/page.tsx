@@ -9,7 +9,7 @@ import axios from "axios";
 import toast from "react-hot-toast";
 
 export default function MyCollections() {
-  const token = localStorage.getItem("x-token"); // Fetch from localStorage/sessionStorage
+  const token = localStorage.getItem("x-token"); 
 
   const [collections, setCollections] = useState([
     { id: 1, title: "Cinematic LUT Pack", video: "/about-bg-1.mp4", isPublic: true, isPaid: "free", price: "" },
@@ -17,17 +17,18 @@ export default function MyCollections() {
     { id: 3, title: "Premium After Effects Template", video: "/about-bg-1.mp4", isPublic: true, isPaid: "paid", price: "25" },
     { id: 4, title: "Aesthetic Color Grading", video: "/about-bg-2.mp4", isPublic: true, isPaid: "free", price: "" },
   ]);
-
+  const [refetch,setReftech]=useState(false)
+  const [loading, setLoading] = useState(false); 
   const [searchQuery, setSearchQuery] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [loading, setLoading] = useState(false); // ✅ Added loading state
 
+// @ts-expect-error kh nk
   const handleSearch = (e) => {
     setSearchQuery(e.target.value);
   };
-
+// @ts-expect-error kh nk
   const handleCreateCollection = async (newCollection) => {
-    setLoading(true); // ✅ Show loader when API starts
+    setLoading(true); 
     try {
       const data = new FormData();
       data.append("title", newCollection.name);
@@ -37,10 +38,9 @@ export default function MyCollections() {
       if (newCollection.coverVideo) {
         data.append("video", newCollection.coverVideo);
       }
-
       data.append("tags", JSON.stringify(newCollection.tags));
 
-      const res = await axios.post(`${SERVER_URL}/collections`, data, {
+      await axios.post(`${SERVER_URL}/collections`, data, {
         headers: {
           "Content-Type": "multipart/form-data",
           Authorization: `Bearer ${token}`,
@@ -48,11 +48,13 @@ export default function MyCollections() {
       });
      
       setLoading(false);
+      setReftech(!refetch)
       toast.success("Successfully Created");
     } catch (err) {
+      console.log(err)
       toast.error("Error creating collection");
     } finally {
-      setLoading(false); // ✅ Hide loader when API completes
+      setLoading(false); 
     }
   };
   useEffect(()=>{
@@ -66,7 +68,7 @@ export default function MyCollections() {
      setCollections(res.data)
     }
     fetch()
-  },[])
+  },[refetch,token])
 
   return (
     <motion.div className="flex min-h-screen overflow-x-hidden pt-20 bg-black text-white">
@@ -138,6 +140,8 @@ export default function MyCollections() {
                       muted
                       className="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform"
                     >
+
+                      {/* @ts-expect-error jkmnjk jn */}
                       <source src={collection.videoUrl} type="video/mp4" />
                     </video>
                     <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-all"></div>
@@ -147,7 +151,8 @@ export default function MyCollections() {
                       whileHover={{ opacity: 1 }}
                       className="absolute hidden w-0 h-0 inset-0 bg-black/50 opacity-0 group-hover:opacity-100 group-hover:w-full group-hover:h-full group-hover:flex duration-700 items-center justify-center transition-all"
                     >
-                      <Link to={`/dashboard/collection/${collection.id}`} className="text-white text-lg cursor-pointer font-semibold">
+                      {/* @ts-expect-error jhk k */}
+                      <Link to={`/dashboard/collection/${collection._id}`} className="text-white text-lg cursor-pointer font-semibold">
                         View Collection
                       </Link>
                     </motion.div>

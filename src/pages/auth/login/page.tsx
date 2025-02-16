@@ -1,8 +1,9 @@
 import { useState } from "react";
-// import axios from "axios";
+import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import { FaGoogle, FaFacebookF, FaTwitter, FaEye, FaEyeSlash } from "react-icons/fa";
 import { motion } from "framer-motion";
+import { SERVER_URL } from "../../../config/index";
 
 export default function Login() {
   const [formData, setFormData] = useState({
@@ -41,13 +42,16 @@ export default function Login() {
     setMessage("");
 
     try {
-    //   const response = await axios.post("https://your-api.com/login", formData);
+      const response = await axios.post(
+        `${SERVER_URL}/auth/user/signin`,
+        formData
+      );
       setMessage("Login successful! Redirecting...");
       localStorage.setItem("x-token","eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3YjA3MzQ5NmViMWEzOGQwYzE0YWMxMSIsImVtYWlsIjoidXNtYW4uMTI3LjAuMC4xQGdtYWlsLmNvbSIsImlzX2VtYWlsX3ZlcmlmaWVkIjp0cnVlLCJpYXQiOjE3Mzk2NzQwMTN9.aJ32QvBMwQJyrNddFPD0md7RRgjIFxyk8NQTXxQ7Zas");
       setTimeout(() => {
         navigate("/dashboard");
       }, 1000);
-    //   console.log(response.data);
+      console.log(response.data);
     } catch (error) {
       setMessage("Invalid email or password.");
       console.error(error);

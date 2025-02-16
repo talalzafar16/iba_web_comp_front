@@ -1,58 +1,76 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { FaSearch, FaEye, FaHeart } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { SERVER_URL } from "../../config";
 
 export default function PublicCollections() {
   const navigate = useNavigate();
+  const [collections, setCollections] = useState([]);
 
-  const [collections] = useState([
-    {
-      id: 1,
-      title: "Cinematic LUT Pack",
-      creator: "John Doe",
-      creatorProfile: "/profile1.jpg",
-      description: "A collection of high-quality LUTs for cinematic grading.",
-      video: "/about-bg-1.mp4",
-      likes: 230,
-    },
-    {
-      id: 2,
-      title: "4K Stock Footage - City Night",
-      creator: "Jane Smith",
-      creatorProfile: "/profile2.jpg",
-      description: "Stunning 4K city night stock footage.",
-      video: "/about-bg-2.mp4",
-      likes: 125,
-    },
-    {
-      id: 3,
-      title: "Premium After Effects Template",
-      creator: "Mark Wilson",
-      creatorProfile: "/profile3.jpg",
-      description: "High-quality After Effects templates for your projects.",
-      video: "/about-bg-1.mp4",
-      likes: 310,
-    },
-    {
-      id: 4,
-      title: "Aesthetic Color Grading",
-      creator: "Emily Johnson",
-      creatorProfile: "/profile4.jpg",
-      description: "Enhance your visuals with professional color grading.",
-      video: "/about-bg-2.mp4",
-      likes: 180,
-    },
-  ]);
+  // const [collections] = useState([
+  //   {
+  //     id: 1,
+  //     title: "Cinematic LUT Pack",
+  //     creator: "John Doe",
+  //     creatorProfile: "/profile1.jpg",
+  //     description: "A collection of high-quality LUTs for cinematic grading.",
+  //     video: "/about-bg-1.mp4",
+  //     likes: 230,
+  //   },
+  //   {
+  //     id: 2,
+  //     title: "4K Stock Footage - City Night",
+  //     creator: "Jane Smith",
+  //     creatorProfile: "/profile2.jpg",
+  //     description: "Stunning 4K city night stock footage.",
+  //     video: "/about-bg-2.mp4",
+  //     likes: 125,
+  //   },
+  //   {
+  //     id: 3,
+  //     title: "Premium After Effects Template",
+  //     creator: "Mark Wilson",
+  //     creatorProfile: "/profile3.jpg",
+  //     description: "High-quality After Effects templates for your projects.",
+  //     video: "/about-bg-1.mp4",
+  //     likes: 310,
+  //   },
+  //   {
+  //     id: 4,
+  //     title: "Aesthetic Color Grading",
+  //     creator: "Emily Johnson",
+  //     creatorProfile: "/profile4.jpg",
+  //     description: "Enhance your visuals with professional color grading.",
+  //     video: "/about-bg-2.mp4",
+  //     likes: 180,
+  //   },
+  // ]);
 
+ const fetchCollection = async () => {
+   try {
+     const response = await axios.get(`${SERVER_URL}/collections/public`, {
+       params:{page_no:1}
+     });
+     setCollections(response.data);
+   } catch (error) {
+     console.error("Error fetching collections:", error);
+   }
+ };
+console.log(collections)
+  
+  useEffect(() => {
+    fetchCollection(); 
+  }, []);
   const [searchQuery, setSearchQuery] = useState("");
 // @ts-expect-error jk kj
   const handleSearch = (e) => {
     setSearchQuery(e.target.value);
   };
 
-  const filteredCollections = collections.filter((collection) =>
-    collection.title.toLowerCase().includes(searchQuery.toLowerCase())
+  const filteredCollections = collections.filter((collection:any) =>
+    collection?.title?.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
   return (
@@ -103,7 +121,7 @@ export default function PublicCollections() {
           className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-8"
         >
           {filteredCollections.length > 0 ? (
-            filteredCollections.map((collection) => (
+            filteredCollections.map((collection:any) => (
               <motion.div
                 key={collection.id}
                 whileHover={{ scale: 1.05 }}
@@ -117,7 +135,7 @@ export default function PublicCollections() {
                     muted
                     className="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform"
                   >
-                    <source src={collection.video} type="video/mp4" />
+                    <source src={collection.videoUrl} type="video/mp4" />
                   </video>
                   <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-all"></div>
                 </div>
@@ -133,16 +151,16 @@ export default function PublicCollections() {
                     alt="Creator"
                     className="w-8 h-8 rounded-full border border-red-500 mr-2"
                   />
-                  <p className="text-gray-300 text-sm">{collection.creator}</p>
+                  {/* <p className="text-gray-300 text-sm">{collection.creator}</p> */}
                 </div>
 
                 <div className="flex items-center justify-center mt-2 text-gray-400 text-sm">
-                  <FaHeart className="text-red-500 mr-2" /> {collection.likes} Likes
+                  <FaHeart className="text-red-500 mr-2" /> {collection.likes.length} Likes
                 </div>
 
                 <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all">
                   <button
-                    onClick={() => navigate(`/collection/${collection.id}`)}
+                    onClick={() => navigate(`/collection/${collection._id}`)}
                     className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg flex items-center transition-all"
                   >
                     <FaEye className="mr-2" /> View Collection

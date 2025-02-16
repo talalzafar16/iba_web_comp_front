@@ -1,15 +1,19 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { motion } from "framer-motion";
 import { FaCloudUploadAlt, FaTrash, FaEye } from "react-icons/fa";
 import SideBar from "../../components/layout/SideBarLayout";
 import MediaPreviewModal from "../../components/shared/MediaPreviewModal";
 import { Link } from "react-router-dom";
+import SERVER_URL from "../../confidential/index";
+import axios from "axios";
 
 export default function CollectionDetails() {
   const { id } = useParams();
-
-  const [collection] = useState({
+  const token = localStorage.getItem("x-token"); 
+  const [refetch,setReftech]=useState(false)
+  // const [loading, setLoading] = useState(false); 
+  const [collection,setCollections] = useState({
     id,
     title: "Cinematic LUT Pack",
     description: "A collection of high-quality LUTs for cinematic grading.",
@@ -20,10 +24,24 @@ export default function CollectionDetails() {
         { id: 3, title: "Image Sample", description: "A beautiful high-resolution stock image.", type: "image", src: "/pic2.jpg" },
       ],
   });
+  
 
   const [items, setItems] = useState(collection.items);
   const [previewMedia, setPreviewMedia] = useState(null);
 
+  useEffect(()=>{
+    console.log(id)
+    const fetch=async()=>{
+      const res = await axios.get(`${SERVER_URL}/items/get_my_items_by_collection_id?collection_id=${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+     console.log(res,"res")
+     setCollections(res.data)
+    }
+    fetch()
+  },[refetch,token])
 // @ts-expect-error jk kj
   const handleUpload = (e) => {
     const file = e.target.files[0];
