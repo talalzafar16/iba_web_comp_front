@@ -8,9 +8,12 @@ import SERVER_URL from "../../confidential/index";
 import SideBar from "../../components/layout/SideBarLayout";
 import axios from "axios";
 import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 export default function AddItem() {
+  const navigate=useNavigate()
 const token = localStorage.getItem("token"); 
+const [loading, setLoading] = useState(false);
   console.log(token,"token")
   const [formData, setFormData] = useState({
     title: "",
@@ -44,6 +47,7 @@ const token = localStorage.getItem("token");
 
     // @ts-expect-error jk kj
   const handleSubmit = async(e) => {
+    setLoading(true);
     e.preventDefault();
 
     if (!formData.title || !formData.description || !formData.media || !formData.collection) {
@@ -69,12 +73,13 @@ const token = localStorage.getItem("token");
       },
     });
    
-    // setLoading(false);
+    setLoading(false);
     // setReftech(!refetch)
+
     toast.success("Successfully Created");
     setTimeout(() => {
       alert("Item added successfully!");
-    //   navigate("/dashboard/my-collections");
+      navigate("/dashboard/my-collection");
     }, 1000);
   };
 
@@ -247,7 +252,7 @@ const token = localStorage.getItem("token");
               type="submit"
               className="w-full bg-red-500 hover:bg-red-600 p-3 rounded-lg text-white text-lg transition-all"
             >
-              Add Item
+              {loading ? "Uploading..." : "Add Item"}
             </motion.button>
           </form>
         </motion.div>

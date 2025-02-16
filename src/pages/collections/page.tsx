@@ -153,7 +153,7 @@ console.log(collections)
                 <div className="flex items-center justify-center mt-3">
                   <img
                     //  @ts-expect-error kbjbn kj
-                    src={collection.creatorProfile}
+                    src={collection.creatorProfile||"https://img.freepik.com/free-vector/blond-man-with-eyeglasses-icon-isolated_24911-100831.jpg?ga=GA1.1.1472029081.1734517638&semt=ais_hybrid" }
                     alt="Creator"
                     className="w-8 h-8 rounded-full border border-red-500 mr-2"
                   />

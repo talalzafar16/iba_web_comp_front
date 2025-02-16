@@ -220,9 +220,9 @@ const stepss = [
           <div key={idx} className="p-6">
             <Card className="bg-red-400 text-white text-center border-none">
               <img
-                /* @ts-expect-error */ 
+                /* @ts-expect-error asdsd */ 
                 src={cinematographer?.profileImage || "https://img.freepik.com/free-vector/blond-man-with-eyeglasses-icon-isolated_24911-100831.jpg?ga=GA1.1.1472029081.1734517638&semt=ais_hybrid"}
-                /* @ts-expect-error */ 
+                /* @ts-expect-error asdasd */ 
                 alt={cinematographer?.name}
                 className="w-32 h-32 mx-auto rounded-full"
               />

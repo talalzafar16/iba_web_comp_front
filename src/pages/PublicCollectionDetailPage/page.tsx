@@ -47,18 +47,14 @@ export default function PublicCollectionDetails() {
   // @ts-expect-error hkbvkjb 
   const handleDownload = (item) => {
     if (!item.isPaid) {
-      window.location.href = `${SERVER_URL}/items/${item.id}/download`;
+      window.open(item.videoUrl, "_blank");
     }
   };
 
   useEffect(()=>{
     console.log(id)
     const fetch=async()=>{
-      const res = await axios.get(`${SERVER_URL}/items/get_my_items_by_collection_id?collection_id=${id}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const res = await axios.get(`${SERVER_URL}/items/public?collectionId=${id}&page_no=1`);
      setItems(res.data)
     }
     fetch()
@@ -66,11 +62,7 @@ export default function PublicCollectionDetails() {
 useEffect(()=>{
   console.log(id)
   const fetch=async()=>{
-    const res = await axios.get(`${SERVER_URL}/collections/${id}`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    const res = await axios.get(`${SERVER_URL}/collections/${id}/public`);
    setCollections(res.data)
   }
   fetch()
@@ -88,15 +80,16 @@ useEffect(()=>{
   return (
     <motion.div className="min-h-screen pt-24 bg-black text-white p-8">
       <section className="relative w-full h-[70vh] flex items-center justify-center text-center">
-        <video
+       {/* @ts-expect-error jnkbkj kjn */}
+        {collection.videoUrl&&<video
           autoPlay
           loop
           muted
           className="absolute top-0 left-0 w-full h-full object-cover opacity-30"
         >
           {/* @ts-expect-error kjbjb bjk */}
-          <source src={collection.videoUrl||"/collection.mp4"} type="video/mp4" />
-        </video>
+          <source src={collection.videoUrl} type="video/mp4" />
+        </video>}
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -162,6 +155,11 @@ useEffect(()=>{
                 {/* @ts-expect-error jkbkjbkj */}
                 {item.plan}
               </p>
+                {/* @ts-expect-error jkbkjbkj */}
+              {item.plan=="premium" &&<p className="text-gray-200 font-bold mt-2  text-center">
+                {/* @ts-expect-error jkbkjbkj */}
+                {item.price} USD
+              </p>}
               <div className="flex justify-center mt-2">
                 <motion.button
                 // @ts-expect-error jknkjb jkb

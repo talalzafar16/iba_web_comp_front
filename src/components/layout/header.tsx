@@ -26,8 +26,8 @@ export default function Navbar() {
 
   const userMenu = (
     <Menu>
-      <Menu.Item key="profile" icon={<UserOutlined />} onClick={() => navigate("/dashboard/edit-profile")}>
-        View Profile
+      <Menu.Item key="Dashboard" icon={<UserOutlined />} onClick={() => navigate("/dashboard")}>
+      Dashboard
       </Menu.Item>
       <Menu.Item key="logout" icon={<LogoutOutlined />} onClick={handleLogout}>
         Logout
