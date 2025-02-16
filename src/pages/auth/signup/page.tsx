@@ -2,11 +2,12 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { FaGoogle, FaFacebookF, FaTwitter, FaEye, FaEyeSlash } from "react-icons/fa";
 import { motion } from "framer-motion";
-// import axios from "axios";
-
+import axios from "axios";
+import { SERVER_URL } from "../../../config";
+import { useLocation } from "react-router-dom";
 export default function SignUp() {
   const [formData, setFormData] = useState({
-    fullName: "",
+    name: "",
     email: "",
     country: "",
     age: "",
@@ -21,21 +22,23 @@ export default function SignUp() {
 
 // @ts-expect-error kjh kj
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-    setErrors({ ...errors, [e.target.name]: "" });
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: name === "age" ? parseInt(value, 10) || "" : value, 
+    });
+    setErrors({ ...errors, [name]: "" });
   };
 
   // Validate Form Fields
   const validateForm = () => {
     const newErrors = {};
 // @ts-expect-error kjh kj
-    if (!formData.fullName.trim()) newErrors.fullName = "Full Name is required.";
+    if (!formData.name.trim()) newErrors.name = "Full Name is required.";
 // @ts-expect-error kjh kj
     if (!formData.email.trim()) newErrors.email = "Email Address is required.";
 // @ts-expect-error kjh kj
     if (!formData.country.trim()) newErrors.country = "Country is required.";
-// @ts-expect-error kjh kj
-    if (!formData.age.trim()) newErrors.age = "Age is required.";
 // @ts-expect-error kjh kj
     else if (isNaN(formData.age) || formData.age < 13) newErrors.age = "You must be at least 13 years old.";
 // @ts-expect-error kjh kj
@@ -54,11 +57,12 @@ export default function SignUp() {
     setMessage("");
 
     try {
-      // const response = await axios.post("https://your-api.com/signup", formData);
+      const response = await axios.post(`${SERVER_URL}/auth/user/signup`,
+       formData);
       setMessage("Sign-up successful! Redirecting...");
 
       setTimeout(() => {
-        navigate("/auth/otp-verification");
+        navigate("/auth/otp-verification",{state:{email:formData.email}});
       }, 1000);
     } catch (error) {
       setMessage("Sign-up failed. Please try again.");
@@ -67,6 +71,7 @@ export default function SignUp() {
       setLoading(false);
     }
   };
+  
 
   return (
     <div className="relative w-full py-32 h-fit min-h-[70vh] flex items-center justify-center">
@@ -91,14 +96,14 @@ export default function SignUp() {
             <label className="block text-gray-400 mb-2">Full Name</label>
             <input
               type="text"
-              name="fullName"
+              name="name"
               placeholder="Enter your name"
-              value={formData.fullName}
+              value={formData.name}
               onChange={handleChange}
               className="auth-input"
             />
 {/* @ts-expect-error jk kj */}
-            {errors.fullName && <p className="text-red-400 text-sm mt-1">{errors.fullName}</p>}
+            {errors.name && <p className="text-red-400 text-sm mt-1">{errors.name}</p>}
           </div>
 
           <div>

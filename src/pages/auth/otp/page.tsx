@@ -1,8 +1,9 @@
 import { useState, useRef, useEffect } from "react";
-// import axios from "axios";
+import axios from "axios";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
-
+import { SERVER_URL } from "../../../config";
+import { useLocation } from "react-router-dom";
 export default function OtpVerification() {
   const navigate=useNavigate()
   const [otp, setOtp] = useState(["", "", "", "", "", ""]);
@@ -10,7 +11,15 @@ export default function OtpVerification() {
   const [resendTimer, setResendTimer] = useState(30);
   const [loading, setLoading] = useState(false);
   const inputRefs = useRef([]);
+ const location = useLocation();
+  const [email, setEmail] = useState("");
+  useEffect(() => {
+    if (location.state?.email) {
+      setEmail(location.state.email);
+    }
+  }, [location]);
 
+  console.log(email)
 // @ts-expect-error  kj j n
   const handleChange = (index, value) => {
     if (!/^\d*$/.test(value)) return; 
@@ -39,9 +48,9 @@ export default function OtpVerification() {
     setMessage("");
 
     try {
-    //   const response = await axios.post("https://your-api.com/verify-otp", {
-    //     otp: enteredOtp,
-    //   });
+      const response = await axios.post(`${SERVER_URL}/auth/verify_email_by_otp`, {
+        otp: enteredOtp,
+      });
 
       setMessage("OTP Verified Successfully! Redirecting...");
     //   console.log(response.data);
@@ -63,9 +72,28 @@ export default function OtpVerification() {
     }
   }, [resendTimer]);
 
-  const handleResendOtp = () => {
+
+  const handleResendOtp = async() => {
     setResendTimer(30);
     setMessage("A new OTP has been sent to your email.");
+  
+     try {
+       const response = await axios.post(
+         `${SERVER_URL}/auth/send_otp_for_email_verification`,
+         {email}
+        
+       );
+
+       setMessage("OTP Verified Successfully! Redirecting...");
+       setTimeout(() => {
+         navigate("/auth/login");
+       }, 1000);
+     } catch (error) {
+       setMessage("Invalid OTP. Please try again.");
+       console.error(error);
+     } finally {
+       setLoading(false);
+     }
   };
 
   return (
