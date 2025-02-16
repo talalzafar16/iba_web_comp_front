@@ -1,7 +1,13 @@
 import { useState } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
-import { FaGoogle, FaFacebookF, FaTwitter, FaEye, FaEyeSlash } from "react-icons/fa";
+import {
+  FaGoogle,
+  FaFacebookF,
+  FaTwitter,
+  FaEye,
+  FaEyeSlash,
+} from "react-icons/fa";
 import { motion } from "framer-motion";
 import { SERVER_URL } from "../../../config/index";
 
@@ -16,7 +22,7 @@ export default function Login() {
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
 
-    // @ts-expect-error kh jk
+  // @ts-expect-error kh jk
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
     setErrors({ ...errors, [e.target.name]: "" });
@@ -32,20 +38,22 @@ export default function Login() {
     return Object.keys(newErrors).length === 0;
   };
 
-    //  @ts-expect-error kh jk
+  //  @ts-expect-error kh jk
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!validateForm()) return; 
+    if (!validateForm()) return;
 
     setLoading(true);
     setMessage("");
 
     try {
       const response = await axios.post(
-        `${SERVER_URL}/auth/user/signin`,
+        `${SERVER_URL}/auth/user/sigin`,
         formData
       );
+      localStorage.setItem("token", JSON.stringify(response.data.token));
+      localStorage.setItem("user", JSON.stringify(response.data.user));
       setMessage("Login successful! Redirecting...");
       setTimeout(() => {
         navigate("/dashboard");
@@ -61,8 +69,12 @@ export default function Login() {
 
   return (
     <div className="relative py-32 h-fit min-h-[70vh] w-full  flex items-center justify-center">
-
-      <video autoPlay loop muted className="absolute top-0 left-0 w-full h-full object-cover ">
+      <video
+        autoPlay
+        loop
+        muted
+        className="absolute top-0 left-0 w-full h-full object-cover "
+      >
         <source src="/about-bg-1.mp4" type="video/mp4" />
       </video>
       <div className="absolute top-0 left-0 w-full h-full bg-black/50"></div>
@@ -73,11 +85,14 @@ export default function Login() {
         transition={{ duration: 1 }}
         className="relative z-10 bg-black/80 p-10 rounded-lg shadow-lg w-full max-w-md text-center"
       >
-        <h2 className="text-3xl font-bold text-white neon-glow">Welcome Back</h2>
-        <p className="text-gray-400 mt-2">Login to access your CineVerse account.</p>
+        <h2 className="text-3xl font-bold text-white neon-glow">
+          Welcome Back
+        </h2>
+        <p className="text-gray-400 mt-2">
+          Login to access your CineVerse account.
+        </p>
 
         <form className="mt-6 text-white space-y-6" onSubmit={handleSubmit}>
- 
           <div>
             <label className="block text-gray-400 mb-2">Email Address</label>
             <input
@@ -88,8 +103,10 @@ export default function Login() {
               onChange={handleChange}
               className="auth-input"
             />
-     {/* @ts-expect-error kh jk */}
-            {errors.email && <p className="text-red-400 text-sm mt-1">{errors.email}</p>}
+            {/* @ts-expect-error kh jk */}
+            {errors.email && (
+              <p className="text-red-400 text-sm mt-1">{errors?.email}</p>
+            )}
           </div>
 
           <div>
@@ -110,16 +127,23 @@ export default function Login() {
                 {showPassword ? <FaEyeSlash size={18} /> : <FaEye size={18} />}
               </span>
             </div>
-     {/* @ts-expect-error kh jk */}
-            {errors.password && <p className="text-red-400 text-sm mt-1">{errors.password}</p>}
+            {/* @ts-expect-error kh jk */}
+            {errors.password && (
+              <p className="text-red-400 text-sm mt-1">{errors.password}</p>
+            )}
           </div>
 
-          <button type="submit" className="auth-button mt-6 cursor-pointer" disabled={loading}>
+          <button
+            type="submit"
+            className="auth-button mt-6 cursor-pointer"
+            disabled={loading}
+          >
             {loading ? "Logging in..." : "Login"}
           </button>
-          {message && <p className="text-center text-gray-300 mt-2">{message}</p>}
+          {message && (
+            <p className="text-center text-gray-300 mt-2">{message}</p>
+          )}
         </form>
-
 
         <p className="text-gray-400 text-center mt-4">Or login with</p>
         <div className="flex justify-center space-x-4 mt-3">
@@ -130,7 +154,10 @@ export default function Login() {
 
         <p className="text-gray-400 text-center mt-4">
           Don't have an account?{" "}
-          <Link to="/auth/signup" className="text-red-400 cursor-pointer hover:underline">
+          <Link
+            to="/auth/signup"
+            className="text-red-400 cursor-pointer hover:underline"
+          >
             Sign Up
           </Link>
         </p>
@@ -139,8 +166,8 @@ export default function Login() {
   );
 }
 
-    //  @ts-expect-error kh jk
-    
+//  @ts-expect-error kh jk
+
 function SocialButton({ Icon, text }) {
   return (
     <button className="flex items-center space-x-2 bg-gray-800 hover:bg-gray-700 text-white px-4 py-2 rounded-full transition-all">

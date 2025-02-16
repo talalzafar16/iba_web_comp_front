@@ -1,3 +1,5 @@
+
+
 import { useState } from "react";
 import {
   FaFilm,
@@ -10,13 +12,16 @@ import {
   FaHeart,
 } from "react-icons/fa";
 import { FaHandHoldingHeart } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 
 import SidebarLink from "../shared/SideBarLink";
 
 export default function SideBar() {
-    const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const navigate = useNavigate();
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+ 
   return (
-    <div >
+    <div>
       <button
         className="absolute z-[999] top-14 left-24 text-white text-2xl md:hidden"
         onClick={() => setIsSidebarOpen(!isSidebarOpen)}
@@ -32,19 +37,44 @@ export default function SideBar() {
         {/* <h2 className="text-2xl font-bold text-red-400 text-center">CineVerse 🎥</h2> */}
         <nav className="mt-6 space-y-3">
           <SidebarLink icon={FaFilm} text="Overview" route={"/dashboard"} />
-          <SidebarLink icon={FaFilm} text="My Collections" route={"/dashboard/my-collection"} />
-          <SidebarLink icon={FaHeart} text="Favourite Collections" route={"/dashboard/favourite-collections"} />
-          <SidebarLink icon={FaHandHoldingHeart} text="Favourite Posts" route={"/dashboard/favourite-posts"} />
-          <SidebarLink icon={FaCloudUploadAlt} text="Upload Post" route={"/dashboard/add-item"} />
-          <SidebarLink icon={FaUserEdit} text="Edit Profile" route={"/dashboard/edit-profile"} />
-          <SidebarLink icon={FaCogs} text="Settings" route={"/dashboard/settings"} />
-          <SidebarLink icon={FaSignOutAlt} text="Logout" route={"/auth/login"}/>
+          <SidebarLink
+            icon={FaFilm}
+            text="My Collections"
+            route={"/dashboard/my-collection"}
+          />
+          <SidebarLink
+            icon={FaHeart}
+            text="Favourite Collections"
+            route={"/dashboard/favourite-collections"}
+          />
+          <SidebarLink
+            icon={FaHandHoldingHeart}
+            text="Favourite Posts"
+            route={"/dashboard/favourite-posts"}
+          />
+          <SidebarLink
+            icon={FaCloudUploadAlt}
+            text="Upload Post"
+            route={"/dashboard/add-item"}
+          />
+          <SidebarLink
+            icon={FaUserEdit}
+            text="Edit Profile"
+            route={"/dashboard/edit-profile"}
+          />
+          <SidebarLink
+            icon={FaCogs}
+            text="Settings"
+            route={"/dashboard/settings"}
+          />
+          
         </nav>
       </aside>
-
-   
     </div>
   );
 }
+
+
+
 
 
