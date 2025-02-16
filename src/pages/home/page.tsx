@@ -1,11 +1,27 @@
 import { Button, Card, Carousel } from "antd";
 import { motion } from "framer-motion";
 import { gsap } from "gsap";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { PlayCircleOutlined, FireOutlined } from "@ant-design/icons";
 
 export default function Home() {
   const heroRef = useRef(null);
+
+  const [cinematographers, setCinematographers] = useState([]);
+
+  useEffect(() => {
+    const fetchCinematographers = async () => {
+      try {
+        const response = await fetch("https://cineverse.flint.software/users/cinematographers");
+        const data = await response.json();
+        setCinematographers(data);
+      } catch (error) {
+        console.error("Error fetching cinematographers:", error);
+      }
+    };
+
+    fetchCinematographers();
+  }, []);
 
   useEffect(() => {
     gsap.fromTo(
@@ -165,22 +181,26 @@ export default function Home() {
         <h2 className="text-4xl font-semibold text-center mb-8 neon-glow"> 🎥 Featured Cinematographers</h2>
 
         <Carousel autoplay className="max-w-3xl mx-auto">
-          {[1, 2, 3].map((cinematographer) => (
-            <div key={cinematographer} className="p-6">
-              <Card className="bg-gray-800 text-white text-center border-none">
-                <img
-                  src={`/cinematographer-${cinematographer}.jpg`}
-                  alt="Cinematographer"
-                  className="w-32 h-32 mx-auto rounded-full"
-                />
-                <h3 className="text-xl mt-4 font-semibold">John Doe</h3>
-                <p className="text-gray-400">Award-winning Cinematographer</p>
-                <Button type="primary" className="mt-3">
-                  Hire Me
-                </Button>
-              </Card>
-            </div>
-          ))}
+        {cinematographers.map((cinematographer,idx) => (
+          <div key={idx} className="p-6">
+            <Card className="bg-red-400 text-white text-center border-none">
+              <img
+                /* @ts-expect-error */ 
+                src={cinematographer?.profileImage || "https://img.freepik.com/free-vector/blond-man-with-eyeglasses-icon-isolated_24911-100831.jpg?ga=GA1.1.1472029081.1734517638&semt=ais_hybrid"}
+                /* @ts-expect-error */ 
+                alt={cinematographer?.name}
+                className="w-32 h-32 mx-auto rounded-full"
+              />
+                {/*//  @ts-expect-error kh jk */} 
+              <h3 className="text-xl mt-4 font-semibold">{cinematographer?.name}</h3>
+                {/*//  @ts-expect-error kh jk */} 
+              <p className="text-gray-400">{cinematographer?.userCollections?.length} Collections</p>
+              <Button type="primary" className="mt-3">
+                Hire Me
+              </Button>
+            </Card>
+          </div>
+        ))}
         </Carousel>
       </section>
 
