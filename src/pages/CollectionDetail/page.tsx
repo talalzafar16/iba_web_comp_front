@@ -10,7 +10,7 @@ import axios from "axios";
 
 export default function CollectionDetails() {
   const { id } = useParams();
-  const token = localStorage.getItem("x-token"); 
+  const token = localStorage.getItem("token"); 
   const [collection,setCollections]=useState({})
   const [items,setItems] = useState([]);
   // const [loading, setLoading] = useState(false); 

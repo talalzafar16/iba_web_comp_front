@@ -73,7 +73,7 @@ console.log(collections)
                       //  @ts-expect-error kbjbn kj 
     collection?.title?.toLowerCase().includes(searchQuery.toLowerCase())
   );
-
+  console.log(filteredCollections,"filteredCollections")
   return (
 <motion.div className="min-h-screen flex flex-col items-center bg-black pt-24 text-white p-8">
       <section className="relative w-full h-[70vh] flex items-center justify-center text-center">

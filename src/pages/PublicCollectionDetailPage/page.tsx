@@ -12,7 +12,7 @@ import {
 import  SERVER_URL  from "../../confidential/index";
 export default function PublicCollectionDetails() {
   const { id } = useParams();
-  const token = localStorage.getItem("x-token");
+  const token = localStorage.getItem("token");
   const [collection,setCollections]=useState({})
   const [items,setItems] = useState([]);
 

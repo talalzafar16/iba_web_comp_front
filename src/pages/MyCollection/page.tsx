@@ -9,7 +9,7 @@ import axios from "axios";
 import toast from "react-hot-toast";
 
 export default function MyCollections() {
-  const token = localStorage.getItem("x-token"); 
+  const token = localStorage.getItem("token"); 
 
   const [collections, setCollections] = useState([
     { id: 1, title: "Cinematic LUT Pack", video: "/about-bg-1.mp4", isPublic: true, isPaid: "free", price: "" },

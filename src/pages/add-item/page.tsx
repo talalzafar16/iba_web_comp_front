@@ -10,9 +10,8 @@ import axios from "axios";
 import toast from "react-hot-toast";
 
 export default function AddItem() {
-//   const navigate = useNavigate();
-const token = localStorage.getItem("x-token"); 
-
+const token = localStorage.getItem("token"); 
+  console.log(token,"token")
   const [formData, setFormData] = useState({
     title: "",
     description: "",
