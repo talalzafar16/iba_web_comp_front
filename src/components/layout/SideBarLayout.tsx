@@ -6,18 +6,18 @@ import {
   FaCloudUploadAlt,
   FaUserEdit,
   FaCogs,
-  FaSignOutAlt,
+  // FaSignOutAlt,
   FaBars,
   FaTimes,
   FaHeart,
 } from "react-icons/fa";
 import { FaHandHoldingHeart } from "react-icons/fa";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 
 import SidebarLink from "../shared/SideBarLink";
 
 export default function SideBar() {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
  
   return (
