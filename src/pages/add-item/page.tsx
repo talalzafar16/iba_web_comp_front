@@ -1,11 +1,17 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { FaCloudUploadAlt } from "react-icons/fa";
 // import { useNavigate } from "react-router-dom";
+import SERVER_URL from "../../confidential/index";
+
+
 import SideBar from "../../components/layout/SideBarLayout";
+import axios from "axios";
+import toast from "react-hot-toast";
 
 export default function AddItem() {
 //   const navigate = useNavigate();
+const token = localStorage.getItem("x-token"); 
 
   const [formData, setFormData] = useState({
     title: "",
@@ -13,13 +19,14 @@ export default function AddItem() {
     media: null,
     collection: "",
     isPublic: false,
-    isPaid: "free", // 'free' or 'paid'
+    isPaid: "basic", // 'free' or 'paid'
     price: "",
   });
+  const [collections, setCollections] = useState([]);
 
   const [preview, setPreview] = useState(null);
 
-  const collections = ["Cinematic LUTs", "4K Stock Footage", "After Effects Templates", "Color Grading Assets"];
+  // const collections = ["Cinematic LUTs", "4K Stock Footage", "After Effects Templates", "Color Grading Assets"];
 
     // @ts-expect-error jk kj
   const handleChange = (e) => {
@@ -37,14 +44,35 @@ export default function AddItem() {
   };
 
     // @ts-expect-error jk kj
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault();
 
     if (!formData.title || !formData.description || !formData.media || !formData.collection) {
       alert("Please fill in all required fields.");
       return;
     }
-    console.log(formData)
+    const data = new FormData();
+    data.append("title", formData.title);
+    data.append("description", formData.description);
+    data.append("parent_collection", formData.collection);
+    data.append("plan", formData.isPaid);
+    data.append("price", formData.price);
+
+    if (formData.media) {
+      data.append("video", formData.media);
+    }
+    data.append("tags", JSON.stringify(["aAI","Love","Nature"]));
+
+    await axios.post(`${SERVER_URL}/items`, data, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+   
+    // setLoading(false);
+    // setReftech(!refetch)
+    toast.success("Successfully Created");
     setTimeout(() => {
       alert("Item added successfully!");
     //   navigate("/dashboard/my-collections");
@@ -59,6 +87,25 @@ export default function AddItem() {
   const handleIsPaidChange = (e) => {
     setFormData({ ...formData, isPaid: e.target.value });
   };
+ 
+   
+   useEffect(() => {
+    const fetchCollection = async () => {
+      try {
+        const response = await axios.get(`${SERVER_URL}/collections/my`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+          params:{page_no:1}
+        });
+        console.log(response)
+        setCollections(response.data);
+      } catch (error) {
+        console.error("Error fetching collections:", error);
+      }
+    };
+     fetchCollection(); 
+   }, [token]);
   return (
     <motion.div className="flex min-h-screen overflow-x-hidden pt-20 bg-black text-white">
       <motion.div initial={{ x: -200, opacity: 0 }} animate={{ x: 0, opacity: 1 }} transition={{ duration: 1 }}>
@@ -119,8 +166,10 @@ export default function AddItem() {
               >
                 <option value="">-- Choose a Collection --</option>
                 {collections.map((collection, index) => (
-                  <option key={index} value={collection}>
-                    {collection}
+                  // @ts-expect-error hjg jk
+                  <option key={index} value={collection._id}>
+                     {/* @ts-expect-error hjg jk */}
+                    {collection.title}
                   </option>
                 ))}
               </select>
@@ -147,13 +196,13 @@ export default function AddItem() {
                 onChange={handleIsPaidChange}
                 className="w-full mt-2 p-2 bg-gray-700 text-white rounded-lg"
               >
-                <option value="free">Free</option>
-                <option value="paid">Paid</option>
+                <option value="basic">Free</option>
+                <option value="premium">Paid</option>
               </select>
             </div>
           )}
 
-          {formData.isPublic && formData.isPaid === "paid" && (
+          {formData.isPublic && formData.isPaid === "premium" && (
             <input
               type="number"
               name="price"

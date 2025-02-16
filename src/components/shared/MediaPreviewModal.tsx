@@ -9,7 +9,7 @@ export default function MediaPreviewModal({ media, onClose }) {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.3 }}
-      className="fixed inset-0 bg-black/80 flex items-center justify-center z-50"
+      className="fixed inset-0 bg-black/80  flex items-center justify-center z-50"
       onClick={onClose}
     >
       <motion.div
@@ -25,13 +25,11 @@ export default function MediaPreviewModal({ media, onClose }) {
           ✖
         </button>
 
-        {media.type === "video" ? (
-          <video controls autoPlay className="w-full rounded-lg">
-            <source src={media.src} type="video/mp4" />
+          <video controls autoPlay className="w-full  h-60 rounded-lg">
+            <source src={media} type="video/mp4" />
           </video>
-        ) : (
-          <img src={media.src} alt="Preview" className="w-full rounded-lg object-cover" />
-        )}
+       
+         
       </motion.div>
     </motion.div>
   );

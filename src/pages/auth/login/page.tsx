@@ -9,7 +9,7 @@ import {
   FaEyeSlash,
 } from "react-icons/fa";
 import { motion } from "framer-motion";
-import { SERVER_URL } from "../../../config/index";
+import SERVER_URL from "../../../confidential/index";
 
 export default function Login() {
   const [formData, setFormData] = useState({
@@ -55,6 +55,7 @@ export default function Login() {
       localStorage.setItem("token", JSON.stringify(response.data.token));
       localStorage.setItem("user", JSON.stringify(response.data.user));
       setMessage("Login successful! Redirecting...");
+      localStorage.setItem("x-token","eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3YjA3MzQ5NmViMWEzOGQwYzE0YWMxMSIsImVtYWlsIjoidXNtYW4uMTI3LjAuMC4xQGdtYWlsLmNvbSIsImlzX2VtYWlsX3ZlcmlmaWVkIjp0cnVlLCJpYXQiOjE3Mzk2NzQwMTN9.aJ32QvBMwQJyrNddFPD0md7RRgjIFxyk8NQTXxQ7Zas");
       setTimeout(() => {
         navigate("/dashboard");
       }, 1000);
